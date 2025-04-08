@@ -1,15 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-// import GerenalInfoForm from "./forms/GeneralInfoForm";
-// import PersonalInfoForm from "./forms/PersonalInfoForm";
 import { useSearchParams } from "next/navigation";
 import { steps } from "./steps";
 import BreadCrumbs from "./BreadCrumbs";
+import Footer from "./Footer";
+import { useState } from "react";
+import { ResumeValues } from "@/lib/validation";
 
 export default function ResumeEditor() {
   const searchParams = useSearchParams();
+
+  const [resumeDt, setResumeDt] = useState<ResumeValues>({});
 
   const currentStep = searchParams.get("step") || steps[0].key;
 
@@ -34,29 +35,16 @@ export default function ResumeEditor() {
       <main className="relative grow">
         <div className="absolute bottom-0 top-0 flex w-full">
           <div className="w-full space-y-6 overflow-y-auto p-3 md:w-1/2">
-            {/* <GerenalInfoForm /> */}
-            {/* <PersonalInfoForm /> */}
             <BreadCrumbs currentSteps={currentStep} setCurrentStep={setStep} />
-            {FormComponent && <FormComponent />}
+            {FormComponent && (
+              <FormComponent resumeDt={resumeDt} setResumeDt={setResumeDt} />
+            )}
           </div>
           <div className="grow md:border-r" />
           <div className="hidden w-1/2 md:flex">right</div>
         </div>
       </main>
-      <footer className="w-full border-t px-3 py-5">
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <Button variant={"secondary"}>Previous step</Button>
-            <Button>Next step</Button>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button variant={"secondary"} asChild>
-              <Link href="/resume">Close</Link>
-            </Button>
-            <p className="text-muted-foreground opacity-0">Saving...</p>
-          </div>
-        </div>
-      </footer>
+      <Footer currentSteps={currentStep} setCurrentStep={setStep} />
     </div>
   );
 }
