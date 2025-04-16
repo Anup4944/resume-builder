@@ -1,33 +1,31 @@
-import { Button } from "@/components/ui/button";
+import { EditorFormProps } from "@/lib/types";
+import { educationSchema, EducationValues } from "@/lib/validation";
+import {
+  useFieldArray,
+  UseFormReturn,
+  useForm,
+  FormProvider,
+} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { GripHorizontal } from "lucide-react";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { EditorFormProps } from "@/lib/types";
-import { workExperienceSchema, WorkExperienceValues } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { GripHorizontal } from "lucide-react";
-import { useEffect } from "react";
-import {
-  useFieldArray,
-  useForm,
-  UseFormReturn,
-  FormProvider,
-} from "react-hook-form";
+import { Button } from "@/components/ui/button";
 
-export default function WorkExperienceForm({
+export default function EducationForm({
   resumeDt,
   setResumeDt,
 }: EditorFormProps) {
-  const form = useForm<WorkExperienceValues>({
-    resolver: zodResolver(workExperienceSchema),
+  const form = useForm<EducationValues>({
+    resolver: zodResolver(educationSchema),
     defaultValues: {
-      workExperiences: resumeDt.workExperiences || [],
+      educations: resumeDt.educations || [],
     },
   });
 
@@ -40,7 +38,7 @@ export default function WorkExperienceForm({
       setResumeDt({
         ...resumeDt,
         workExperiences:
-          values.workExperiences?.filter((w) => w !== undefined) || [],
+          values.educations?.filter((e) => e !== undefined) || [],
       });
     });
 
@@ -49,21 +47,20 @@ export default function WorkExperienceForm({
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "workExperiences",
+    name: "educations",
   });
-
   return (
     <div className="mx-w-xl mx-auto space-y-6">
       <div className="space-y-1.5 text-center">
-        <h2 className="text-2xl font-semibold">Work experience</h2>
+        <h2 className="text-2xl font-semibold">Educations</h2>
         <p className="text-sm text-muted-foreground">
-          Add as many work experiences you like
+          Add as many education you like
         </p>
       </div>
       <FormProvider {...form}>
         <form className="space-y-3">
           {fields.map((field, index) => (
-            <WorkExperienceItem
+            <EducationItem
               key={field.id}
               form={form}
               index={index}
@@ -75,15 +72,14 @@ export default function WorkExperienceForm({
               type="button"
               onClick={() =>
                 append({
-                  position: "",
-                  company: "",
+                  degree: "",
+                  school: "",
                   startDate: "",
                   endDate: "",
-                  description: "",
                 })
               }
             >
-              Add work experience
+              Add Education
             </Button>
           </div>
         </form>
@@ -92,25 +88,25 @@ export default function WorkExperienceForm({
   );
 }
 
-interface WorkExperienceItemProps {
-  form: UseFormReturn<WorkExperienceValues>;
+interface EducationItemProps {
+  form: UseFormReturn<EducationValues>;
   index: number;
   remove: (index: number) => void;
 }
 
-function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
+function EducationItem({ form, index, remove }: EducationItemProps) {
   return (
     <div className="space-y-3 rounded-md bg-background p-3">
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">{index + 1}</span>
+        <span className="font-semibold">Education {index + 1}</span>
         <GripHorizontal className="size-5 cursor-grab text-muted-foreground" />
       </div>
       <FormField
         control={form.control}
-        name={`workExperiences.${index}.position`}
+        name={`educations.${index}.degree`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Job Title</FormLabel>
+            <FormLabel>Degree</FormLabel>
             <FormControl>
               <Input {...field} autoFocus />
             </FormControl>
@@ -119,10 +115,10 @@ function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
       />
       <FormField
         control={form.control}
-        name={`workExperiences.${index}.company`}
+        name={`educations.${index}.school`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Comopany</FormLabel>
+            <FormLabel>School</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
@@ -132,7 +128,7 @@ function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
       <div className="grid grid-cols-2 gap-3">
         <FormField
           control={form.control}
-          name={`workExperiences.${index}.startDate`}
+          name={`educations.${index}.startDate`}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Start Date</FormLabel>
@@ -148,7 +144,7 @@ function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
         />
         <FormField
           control={form.control}
-          name={`workExperiences.${index}.endDate`}
+          name={`educations.${index}.endDate`}
           render={({ field }) => (
             <FormItem>
               <FormLabel>End Date</FormLabel>
@@ -163,22 +159,6 @@ function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
           )}
         />
       </div>
-      <FormDescription>
-        Leave <span className="font-semibold">end date</span> empty if you are
-        currently working.
-      </FormDescription>
-      <FormField
-        control={form.control}
-        name={`workExperiences.${index}.description`}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Description</FormLabel>
-            <FormControl>
-              <Textarea {...field} />
-            </FormControl>
-          </FormItem>
-        )}
-      />
       <Button
         variant={"destructive"}
         type="button"
