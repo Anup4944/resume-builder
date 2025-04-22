@@ -18,7 +18,7 @@ export default function SummaryForm({
 }: EditorFormProps) {
   const form = useForm<SummaryValues>({
     resolver: zodResolver(summarySchema),
-    defaultValues: { summary: resumeDt.summary },
+    defaultValues: { summary: resumeDt.summary || "" },
   });
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function SummaryForm({
           <FormField
             control={form.control}
             name="summary"
-            render={({ field }) => {
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Professional summary</FormLabel>
                 <FormControl>
@@ -54,8 +54,8 @@ export default function SummaryForm({
                   />
                 </FormControl>
                 <FormMessage />
-              </FormItem>;
-            }}
+              </FormItem>
+            )}
           />
         </form>
       </FormProvider>

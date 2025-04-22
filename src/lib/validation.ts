@@ -70,7 +70,7 @@ export const skillsSchema = z.object({
 export type SkillsValues = z.infer<typeof skillsSchema>;
 
 export const summarySchema = z.object({
-  summary: z.array(z.string().trim()).optional(),
+  summary: optionalString,
 });
 
 export type SummaryValues = z.infer<typeof summarySchema>;
