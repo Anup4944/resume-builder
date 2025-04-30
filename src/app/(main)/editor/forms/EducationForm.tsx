@@ -1,11 +1,6 @@
 import { EditorFormProps } from "@/lib/types";
 import { educationSchema, EducationValues } from "@/lib/validation";
-import {
-  useFieldArray,
-  UseFormReturn,
-  useForm,
-  FormProvider,
-} from "react-hook-form";
+import { useFieldArray, UseFormReturn, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { GripHorizontal } from "lucide-react";
@@ -14,6 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -57,7 +53,7 @@ export default function EducationForm({
           Add as many education you like
         </p>
       </div>
-      <FormProvider {...form}>
+      <Form {...form}>
         <form className="space-y-3">
           {fields.map((field, index) => (
             <EducationItem
@@ -83,7 +79,7 @@ export default function EducationForm({
             </Button>
           </div>
         </form>
-      </FormProvider>
+      </Form>
     </div>
   );
 }
