@@ -5,6 +5,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,12 +14,7 @@ import { workExperienceSchema, WorkExperienceValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GripHorizontal } from "lucide-react";
 import { useEffect } from "react";
-import {
-  useFieldArray,
-  useForm,
-  UseFormReturn,
-  FormProvider,
-} from "react-hook-form";
+import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
 
 export default function WorkExperienceForm({
   resumeDt,
@@ -60,7 +56,7 @@ export default function WorkExperienceForm({
           Add as many work experiences you like
         </p>
       </div>
-      <FormProvider {...form}>
+      <Form {...form}>
         <form className="space-y-3">
           {fields.map((field, index) => (
             <WorkExperienceItem
@@ -87,7 +83,7 @@ export default function WorkExperienceForm({
             </Button>
           </div>
         </form>
-      </FormProvider>
+      </Form>
     </div>
   );
 }
@@ -122,7 +118,7 @@ function WorkExperienceItem({ form, index, remove }: WorkExperienceItemProps) {
         name={`workExperiences.${index}.company`}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Comopany</FormLabel>
+            <FormLabel>Company</FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
