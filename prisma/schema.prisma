@@ -45,7 +45,7 @@ model Resume {
 model WorkExperience {
   id          String    @id @default(cuid())
   position    String?
-  compant     String?
+  company     String?
   startDate   DateTime?
   endDate     DateTime?
   description String?

@@ -33,8 +33,7 @@ export default function EducationForm({
       // update form data
       setResumeDt({
         ...resumeDt,
-        workExperiences:
-          values.educations?.filter((e) => e !== undefined) || [],
+        educations: values.educations?.filter((e) => e !== undefined) || [],
       });
     });
 
