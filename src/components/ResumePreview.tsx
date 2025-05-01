@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { formatDate } from "date-fns";
 import { Badge } from "./ui/badge";
+import { BorderStyles } from "@/app/(main)/editor/BorderStyleBtn";
 
 interface ResumePreviewProps {
   resumeDt: ResumeValues;
@@ -32,8 +33,8 @@ export default function ResumePreview({
         style={{ zoom: (1 / 794) * width }}
       >
         {" "}
-        <SummarySection resumeDt={resumeDt} />
         <PersonalInfoHeader resumeDt={resumeDt} />
+        <SummarySection resumeDt={resumeDt} />
         <WorkExpSection resumeDt={resumeDt} />
         <EducationSection resumeDt={resumeDt} />
         <SkillsSection resumeDt={resumeDt} />
@@ -57,6 +58,7 @@ function PersonalInfoHeader({ resumeDt }: ResumeSectionProps) {
     phone,
     email,
     colorHex,
+    borderStyle,
   } = resumeDt;
 
   const [photoSrc, setPhotoSrc] = useState(photo instanceof File ? "" : photo);
@@ -78,6 +80,14 @@ function PersonalInfoHeader({ resumeDt }: ResumeSectionProps) {
           height={100}
           alt="Author photo"
           className="aspect-square object-cover"
+          style={{
+            borderRadius:
+              borderStyle === BorderStyles.SQUARE
+                ? "0px"
+                : borderStyle === BorderStyles.CIRCLE
+                  ? "9999px"
+                  : "10%",
+          }}
         />
       )}
       <div className="space-y-2.5">
@@ -199,7 +209,7 @@ function EducationSection({ resumeDt }: ResumeSectionProps) {
   );
 }
 function SkillsSection({ resumeDt }: ResumeSectionProps) {
-  const { skills, colorHex } = resumeDt;
+  const { skills, colorHex, borderStyle } = resumeDt;
 
   if (!skills?.length) return null;
 
@@ -215,7 +225,15 @@ function SkillsSection({ resumeDt }: ResumeSectionProps) {
             <Badge
               key={index}
               className="rounded-md bg-black text-white hover:bg-black"
-              style={{ backgroundColor: colorHex }}
+              style={{
+                backgroundColor: colorHex,
+                borderRadius:
+                  borderStyle === BorderStyles.SQUARE
+                    ? "0px"
+                    : borderStyle === BorderStyles.CIRCLE
+                      ? "9999px"
+                      : "8px",
+              }}
             >
               {skill}
             </Badge>
