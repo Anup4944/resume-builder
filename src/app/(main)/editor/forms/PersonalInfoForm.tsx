@@ -10,8 +10,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { EditorFormProps } from "@/lib/types";
+import { Button } from "@/components/ui/button";
 
 export default function PersonalInfoForm({
   resumeDt,
@@ -42,6 +43,8 @@ export default function PersonalInfoForm({
     return unsubscribe;
   }, [form, resumeDt, setResumeDt]);
 
+  const photoRef = useRef<HTMLInputElement>(null);
+
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-1.5 text-center">
@@ -56,17 +59,32 @@ export default function PersonalInfoForm({
             render={({ field: { value, ...fieldValues } }) => (
               <FormItem>
                 <FormLabel>Your photo</FormLabel>
-                <FormControl>
-                  <Input
-                    {...fieldValues}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      fieldValues.onChange(file);
+                <div className="flex items-center gap-2">
+                  <FormControl>
+                    <Input
+                      {...fieldValues}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        fieldValues.onChange(file);
+                      }}
+                      ref={photoRef}
+                    />
+                  </FormControl>
+                  <Button
+                    variant={"secondary"}
+                    type="button"
+                    onClick={() => {
+                      fieldValues.onChange(null);
+                      if (photoRef.current) {
+                        photoRef.current.value = "";
+                      }
                     }}
-                  />
-                </FormControl>
+                  >
+                    Remove
+                  </Button>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
