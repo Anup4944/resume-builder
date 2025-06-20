@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import GenerateSummaryBtn from "./GenerateSummaryBtn";
 
 export default function SummaryForm({
   resumeDt,
@@ -54,6 +55,12 @@ export default function SummaryForm({
                   />
                 </FormControl>
                 <FormMessage />
+                <GenerateSummaryBtn
+                  resumeDt={resumeDt}
+                  onSummaryGenerated={(summary) =>
+                    form.setValue("summary", summary)
+                  }
+                />
               </FormItem>
             )}
           />
