@@ -33,7 +33,7 @@ export default function ResumePreview({
         style={{ zoom: (1 / 794) * width }}
       >
         {" "}
-        <pre>{JSON.stringify(resumeDt, null, 2)}</pre>{" "}
+        {/* <pre>{JSON.stringify(resumeDt, null, 2)}</pre>{" "} */}
         <PersonalInfoHeader resumeDt={resumeDt} />
         <SummarySection resumeDt={resumeDt} />
         <WorkExpSection resumeDt={resumeDt} />

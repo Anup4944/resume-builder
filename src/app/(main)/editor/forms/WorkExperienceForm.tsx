@@ -34,6 +34,7 @@ import {
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import { cn } from "@/lib/utils";
+import GenerateWorkExpBtn from "./GenerateWorkExpBtn";
 
 export default function WorkExperienceForm({
   resumeDt,
@@ -168,11 +169,18 @@ function WorkExperienceItem({
       style={{ transform: CSS.Transform.toString(transform), transition }}
     >
       <div className="flex justify-between gap-2">
-        <span className="font-semibold">{index + 1}</span>
+        <span className="font-semibold">Work experience {index + 1}</span>
         <GripHorizontal
           className="size-5 cursor-grab text-muted-foreground focus:outline-none"
           {...attributes}
           {...listeners}
+        />
+      </div>
+      <div className="flex justify-center">
+        <GenerateWorkExpBtn
+          onWorkExperienceGenerated={(exp) =>
+            form.setValue(`workExperiences.${index}`, exp)
+          }
         />
       </div>
       <FormField
