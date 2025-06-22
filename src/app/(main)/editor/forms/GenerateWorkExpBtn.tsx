@@ -8,14 +8,10 @@ import {
 import { WandSparklesIcon } from "lucide-react";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, useForm } from "react-hook-form";
-import { Dialog, DialogHeader } from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+
 import {
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@radix-ui/react-dialog";
-import {
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -25,6 +21,13 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import LoadingBtn from "@/components/LoadingBtn";
 import { generateWorkExperience } from "./actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface GenerateWorkExpBtnProps {
   onWorkExperienceGenerated: (workExperience: WorkExperience) => void;
