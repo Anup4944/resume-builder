@@ -9,11 +9,13 @@ import { BorderStyles } from "@/app/(main)/editor/BorderStyleBtn";
 
 interface ResumePreviewProps {
   resumeDt: ResumeValues;
+  contentRef?: React.RefObject<HTMLDivElement>;
   className?: string;
 }
 
 export default function ResumePreview({
   resumeDt,
+  contentRef,
   className,
 }: ResumePreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,6 +31,8 @@ export default function ResumePreview({
       ref={containerRef}
     >
       <div
+        ref={contentRef}
+        id="resumePreviewContent"
         className={cn("space-y-6 p-6", !width && "invisible")}
         style={{ zoom: (1 / 794) * width }}
       >
