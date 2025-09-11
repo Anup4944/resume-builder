@@ -36,7 +36,7 @@ export default function PremiumModal() {
   return (
     <Dialog
       open={open}
-      onOpenChange={() => {
+      onOpenChange={(open) => {
         if (!loading) {
           setOpen(open);
         }

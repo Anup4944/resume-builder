@@ -1,6 +1,8 @@
 "use server";
 
 import openai from "@/lib/openai";
+import { canUseAiTools } from "@/lib/permission";
+import { getUserSubscriptionLevel } from "@/lib/subscription";
 import {
   GenerateSummaryInput,
   generateSummarySchema,
@@ -8,10 +10,21 @@ import {
   generateWorkExperienceSchema,
   WorkExperience,
 } from "@/lib/validation";
+import { auth } from "@clerk/nextjs/server";
 
 export async function generateSummary(input: GenerateSummaryInput) {
-  // TODO block for non premium users
+  const { userId } = await auth();
 
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const subscriptionLevel = await getUserSubscriptionLevel(userId);
+  if (!canUseAiTools(subscriptionLevel)) {
+    throw new Error(
+      "AI tools are available for Pro users and above. Please upgrade your subscription.",
+    );
+  }
   const { jobTitle, workExperiences, educations, skills } =
     generateSummarySchema.parse(input);
 
@@ -71,8 +84,18 @@ export async function generateSummary(input: GenerateSummaryInput) {
 export async function generateWorkExperience(
   input: GenerateWorkExperienceInput,
 ) {
-  // TODO block for non premium users
+  const { userId } = await auth();
 
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  const subscriptionLevel = await getUserSubscriptionLevel(userId);
+  if (!canUseAiTools(subscriptionLevel)) {
+    throw new Error(
+      "AI tools are available for Pro users and above. Please upgrade your subscription.",
+    );
+  }
   const { description } = generateWorkExperienceSchema.parse(input);
 
   const systemMsg = `You're a job resume generator AI. Your task is to generate a single work experience entry based on user input. Your response must adhere to the following structure. You can omit fields if they can't be inferef from the provided data, but don't add any new ones
