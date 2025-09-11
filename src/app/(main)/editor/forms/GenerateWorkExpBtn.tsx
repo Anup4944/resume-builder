@@ -28,6 +28,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import usePremiumModal from "@/hooks/usePremiumModal";
+import { useSubscriptionLevel } from "../../SubscriptionLevelProvider";
+import { canUseAiTools } from "@/lib/permission";
 
 interface GenerateWorkExpBtnProps {
   onWorkExperienceGenerated: (workExperience: WorkExperience) => void;
@@ -37,6 +40,9 @@ export default function GenerateWorkExpBtn({
   onWorkExperienceGenerated,
 }: GenerateWorkExpBtnProps) {
   const [showInputDialog, setShowInputDialog] = useState(false);
+  const subscriptionLevel = useSubscriptionLevel();
+
+  const premiumModal = usePremiumModal();
 
   return (
     <>
@@ -44,7 +50,14 @@ export default function GenerateWorkExpBtn({
         variant={"outline"}
         type="button"
         // TODO: block for non-premium users
-        onClick={() => setShowInputDialog(true)}
+        onClick={() => {
+          if (!canUseAiTools(subscriptionLevel)) {
+            premiumModal.setOpen(true);
+            return;
+          }
+
+          setShowInputDialog(true);
+        }}
       >
         <WandSparklesIcon className="size-4" />
         Smart fill (AI)

@@ -4,6 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import ResumeItem from "./ResumeItem";
 import CreateResumeBtn from "./CreateResumeBtn";
+import { getUserSubscriptionLevel } from "@/lib/subscription";
+import { canCreateResume } from "@/lib/permission";
 
 export const metadata: Metadata = {
   title: "Your resumes",
@@ -16,7 +18,7 @@ export default async function Page() {
     return null;
   }
 
-  const [resumes, totalCount] = await Promise.all([
+  const [resumes, totalCount, subscriptionLevel] = await Promise.all([
     prisma.resume.findMany({
       where: {
         userId,
@@ -29,13 +31,16 @@ export default async function Page() {
     prisma.resume.count({
       where: { userId },
     }),
+    getUserSubscriptionLevel(userId),
   ]);
 
   //TODO: Check quato for non-premium users
 
   return (
     <main className="max-w-7x1 mx-auto w-full space-y-6 px-3 py-6">
-      <CreateResumeBtn canCreate={totalCount < 3} />
+      <CreateResumeBtn
+        canCreate={canCreateResume(subscriptionLevel, totalCount)}
+      />
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">Your resumes ({totalCount})</h1>
       </div>
