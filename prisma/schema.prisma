@@ -82,5 +82,5 @@ model UserSubscription {
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
-  @@map("subscriptions")
+  @@map("user_subscriptions")
 }
