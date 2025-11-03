@@ -40,7 +40,6 @@ export default async function Page() {
 
       {subscription ? (
         <>
-          {/* <ManageSubBtn /> */}
           {subscription.stripeCancelAtPeriodEnd && (
             <p className="text-destructive">
               Your subscription will end on{" "}
