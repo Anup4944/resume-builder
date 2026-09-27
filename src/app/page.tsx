@@ -2,7 +2,7 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import resumeLogo from "@/assets/resume-preview.jpg";
+import resumeLogo from "@/assets/resume-preview.png";
 
 export default function Home() {
   return (
