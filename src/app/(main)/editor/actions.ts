@@ -10,7 +10,6 @@ import { canCreateResume, canUseCustomizations } from "@/lib/permission";
 
 export async function saveResume(values: ResumeValues) {
   const { id } = values;
-  // console.log("recieved dt", values);
 
   const { photo, workExperiences, educations, ...resumeValues } =
     resumeSchema.parse(values);

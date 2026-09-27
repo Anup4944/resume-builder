@@ -55,9 +55,6 @@ export async function generateSummary(input: GenerateSummaryInput) {
    Skills: ${skills}
   `;
 
-  console.log("System msg", systemMsg);
-  console.log("User msg", userMsg);
-
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [

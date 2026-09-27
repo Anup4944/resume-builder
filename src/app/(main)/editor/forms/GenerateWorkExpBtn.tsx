@@ -49,7 +49,6 @@ export default function GenerateWorkExpBtn({
       <Button
         variant={"outline"}
         type="button"
-        // TODO: block for non-premium users
         onClick={() => {
           if (!canUseAiTools(subscriptionLevel)) {
             premiumModal.setOpen(true);
