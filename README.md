@@ -222,7 +222,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Important Links 🔗
 
--   **Live Demo:** [Link to Live Demo - if available]
+-   **Live Demo:** [[Link to Live Demo - if available](https://resume-builder-n6ld010s9-anup4944s-projects.vercel.app/)]
 -   **Author's GitHub:** [https://github.com/Anup4944](https://github.com/Anup4944)
 
 ## Footer 📄
